@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Etch-A-Sketch</title>
-        <link href="style.css" rel="stylesheet" type="text/css">
-    </head>
+	<head>
+		<meta charset="utf-8" />
+		<title>Etch-A-Sketch</title>
+		<link href="style.css" rel="stylesheet" type="text/css" />
+	</head>
 
-    <body>
-        <h1>
-            Etch-A-Sketch
-        </h1>
+	<body>
+		<h1>
+			Etch-A-Sketch
+		</h1>
 
-        <div id="grid">
+		<button id="clear-button">Clear</button>
 
-        </div>
-        
-        <script>
-            function gridGenerator(v) {
+		<div id="grid"></div>
 
-                for(let i = 0; i<v; i++) {
-                    let grid = document.getElementById('grid');
-                    let box = document.createElement('div');
-                    box.className = 'box';
-                    grid.appendChild(box);
-                }
+		<script>
+			function gridGenerator(v) {
+				for (let i = 0; i < v; i++) {
+					let grid = document.getElementById("grid");
+					let box = document.createElement("div");
+					box.className = "box row column";
+					grid.appendChild(box);
+				}
+			}
 
-            }
+			gridGenerator(256);
 
-            gridGenerator(256);
+			let boxes = document.getElementsByClassName("box");
+			boxes = Array.from(boxes);
+			boxes.forEach(item => item.addEventListener("mouseover", colorChanger));
 
-            
+			function colorChanger(e) {
+				e.target.style.backgroundColor = "black";
+			}
 
+			function colorResetter(e) {
+				boxes.forEach(item => (item.style.backgroundColor = "white"));
+			}
 
-        </script>
-
-
-
-
-    </body>
+			let clearButton = document.getElementById("clear-button");
+			clearButton.addEventListener("click", colorResetter);
+		</script>
+	</body>
 </html>
