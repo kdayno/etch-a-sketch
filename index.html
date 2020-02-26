@@ -7,29 +7,35 @@
 	</head>
 
 	<body>
-		<h1>
-			Etch-A-Sketch
-		</h1>
+		<h1>Etch-A-Sketch</h1>
+
+		<div id="size-buttons">
+			<h2>Grid Size:</h2>
+			<button id="16-button" class="button">16x16</button>
+			<button id="32-button" class="button">32x32</button>
+			<button id="64-button" class="button">64x64</button>
+		</div>
+		<div id="grid"></div>
 
 		<button id="clear-button">Clear</button>
-
-		<div id="grid"></div>
 
 		<script>
 			function gridGenerator(v) {
 				for (let i = 0; i < v; i++) {
 					let grid = document.getElementById("grid");
 					let box = document.createElement("div");
-					box.className = "box row column";
+					box.className = "box";
 					grid.appendChild(box);
 				}
 			}
-
 			gridGenerator(256);
 
 			let boxes = document.getElementsByClassName("box");
 			boxes = Array.from(boxes);
 			boxes.forEach(item => item.addEventListener("mouseover", colorChanger));
+
+			let clearButton = document.getElementById("clear-button");
+			clearButton.addEventListener("click", colorResetter);
 
 			function colorChanger(e) {
 				e.target.style.backgroundColor = "black";
@@ -39,8 +45,72 @@
 				boxes.forEach(item => (item.style.backgroundColor = "white"));
 			}
 
-			let clearButton = document.getElementById("clear-button");
-			clearButton.addEventListener("click", colorResetter);
+			function removeElementsByClass(className) {
+				var elements = document.getElementsByClassName(className);
+				while (elements.length > 0) {
+					elements[0].parentNode.removeChild(elements[0]);
+				}
+			}
+
+			let button16 = document.getElementById("16-button");
+			button16.addEventListener("click", function() {
+				removeElementsByClass("box");
+				gridGenerator(256);
+				let boxes = document.getElementsByClassName("box");
+				boxes = Array.from(boxes);
+				boxes.forEach(item => item.addEventListener("mouseover", colorChanger));
+				document.getElementById("grid").style.height = "360px";
+				document.getElementById("grid").style.width = "360px";
+				for (let i = 0; i < boxes.length; i++) {
+					boxes[i].style.width = "20px";
+					boxes[i].style.height = "20px";
+				}
+				function colorResetter(e) {
+					boxes.forEach(item => (item.style.backgroundColor = "white"));
+				}
+				let clearButton = document.getElementById("clear-button");
+				clearButton.addEventListener("click", colorResetter);
+			});
+
+			let button32 = document.getElementById("32-button");
+			button32.addEventListener("click", function() {
+				removeElementsByClass("box");
+				gridGenerator(1024);
+				let boxes = document.getElementsByClassName("box");
+				boxes = Array.from(boxes);
+				boxes.forEach(item => item.addEventListener("mouseover", colorChanger));
+				document.getElementById("grid").style.height = "450px";
+				document.getElementById("grid").style.width = "450px";
+				for (let i = 0; i < boxes.length; i++) {
+					boxes[i].style.width = "12px";
+					boxes[i].style.height = "12px";
+				}
+				function colorResetter(e) {
+					boxes.forEach(item => (item.style.backgroundColor = "white"));
+				}
+				let clearButton = document.getElementById("clear-button");
+				clearButton.addEventListener("click", colorResetter);
+			});
+
+			let button64 = document.getElementById("64-button");
+			button64.addEventListener("click", function() {
+				removeElementsByClass("box");
+				gridGenerator(4096);
+				let boxes = document.getElementsByClassName("box");
+				boxes = Array.from(boxes);
+				boxes.forEach(item => item.addEventListener("mouseover", colorChanger));
+				document.getElementById("grid").style.height = "640px";
+				document.getElementById("grid").style.width = "640px";
+				for (let i = 0; i < boxes.length; i++) {
+					boxes[i].style.width = "8px";
+					boxes[i].style.height = "8px";
+				}
+				function colorResetter(e) {
+					boxes.forEach(item => (item.style.backgroundColor = "white"));
+				}
+				let clearButton = document.getElementById("clear-button");
+				clearButton.addEventListener("click", colorResetter);
+			});
 		</script>
 	</body>
 </html>
